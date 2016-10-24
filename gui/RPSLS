@@ -1,0 +1,141 @@
+package gui;
+
+import javax.swing.*;
+import javax.swing.border.Border;
+import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.util.Random;
+
+//import java.awt.event.ActionListener;
+
+public class RPSLS extends JFrame {
+
+    Random rand = new Random();
+    private int playerScore;
+    private int computerScore;
+    private int playerChoice;
+
+    public int randInt(int min, int max) {
+        int random = rand.nextInt((max - min) + 1) + min;
+        return random;
+    }
+
+    public RPSLS() {
+        //Creating instance of a frame
+        JFrame frame = new JFrame("Rock Paper Scissors Lizard Spock");
+        // Setting the width and height of frame
+        setSize(370, 300);
+        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+
+        JPanel panel = new JPanel();
+        //adding panel to frame
+        add(panel);
+        placeComponents(panel);
+        setVisible(true);
+    }
+
+    private void placeComponents(JPanel panel) {
+        panel.setLayout(null);
+
+        JLabel yourChoice = new JLabel("Your Choice: ");
+        yourChoice.setBounds(30,20,80,25);
+        panel.add(yourChoice);
+
+        ButtonGroup group = new ButtonGroup();
+
+        JRadioButton myRock = new JRadioButton("Rock");
+        myRock.setBounds(26,45,80,25);
+        group.add(myRock);
+        panel.add(myRock);
+        //myRock.addActionListener(new MyActionListener());
+
+        JRadioButton myPaper = new JRadioButton("Paper");
+        myPaper.setBounds(26,65,80,25);
+        group.add(myPaper);
+        panel.add(myPaper);
+        //myPaper.addActionListener(new MyActionListener());
+
+
+        JRadioButton myScissors = new JRadioButton("Scissors");
+        myScissors.setBounds(26,85,80,25);
+        group.add(myScissors);
+        panel.add(myScissors);
+        //myScissors.addActionListener(new MyActionListener());
+
+        JRadioButton myLizard = new JRadioButton("Lizard");
+        myLizard.setBounds(26,105,80,25);
+        group.add(myLizard);
+        panel.add(myLizard);
+        //myLizard.addActionListener(new MyActionListener());
+
+        JRadioButton mySpock = new JRadioButton("Spock");
+        mySpock.setBounds(26,125,80,25);
+        group.add(mySpock);
+        panel.add(mySpock);
+        //mySpock.addActionListener(new MyActionListener());
+
+        JButton myButton = new JButton("RockPaperScissorsLizardSpock!");
+        myButton.setBounds(10,155,330,25);
+        panel.add(myButton);
+        myButton.addActionListener(new MyActionListener());
+
+        JLabel player = new JLabel("Player's Score");
+        player.setBounds(20,185,120,25);
+        panel.add(player);
+
+        JLabel computer = new JLabel("Computer's Score");
+        computer.setBounds(20,220,120,25);
+        panel.add(computer);
+
+        JTextArea results = new JTextArea();
+        results.setBounds(135,30,205,100);
+        //placing a border to the TextArea
+        Border border = BorderFactory.createLineBorder(Color.BLACK);
+        results.setBorder(BorderFactory.createCompoundBorder(border,
+                BorderFactory.createEmptyBorder(10, 10, 10, 10)));
+        panel.add(results);
+
+        JTextArea pscore = new JTextArea();
+        pscore.setBounds(135,185,205,25);
+        //placing a border to the TextArea
+        pscore.setBorder(BorderFactory.createCompoundBorder(border,
+                BorderFactory.createEmptyBorder(5, 5, 5, 5)));
+        panel.add(pscore);
+
+        JTextArea cscore = new JTextArea();
+        cscore.setBounds(135,220,205,25);
+        //placing a border to the TextArea
+        cscore.setBorder(BorderFactory.createCompoundBorder(border,
+                BorderFactory.createEmptyBorder(5, 5, 5, 5)));
+        panel.add(cscore);
+
+
+        if(myRock.isSelected()) {
+            playerChoice = 1;
+        } else if(myPaper.isSelected()) {
+            playerChoice = 2;
+        } else if(myScissors.isSelected()) {
+            playerChoice = 3;
+        } else if(myLizard.isSelected()) {
+            playerChoice = 4;
+        } else {
+            playerChoice = 5;
+        }
+
+
+    }
+
+    // inner class
+    class MyActionListener implements ActionListener {
+        @Override
+        public void actionPerformed(ActionEvent e) {
+
+        }
+    }
+
+
+    public static void main(String[] args) {
+        new RPSLS();
+    }
+}
