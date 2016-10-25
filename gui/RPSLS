@@ -1,20 +1,35 @@
 package gui;
 
+/*
+ *  Allyssa S. Albores 10/24/16
+ */
+
 import javax.swing.*;
 import javax.swing.border.Border;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.Enumeration;
 import java.util.Random;
-
-//import java.awt.event.ActionListener;
 
 public class RPSLS extends JFrame {
 
     Random rand = new Random();
     private int playerScore;
     private int computerScore;
-    private int playerChoice;
+    //private int playerChoice;
+    JLabel yourChoice = new JLabel("Your Choice: ");
+    ButtonGroup group = new ButtonGroup();
+    JRadioButton myPaper = new JRadioButton("Paper");
+    JRadioButton myScissors = new JRadioButton("Scissors");
+    JRadioButton myLizard = new JRadioButton("Lizard");
+    JRadioButton mySpock = new JRadioButton("Spock");
+    JButton myButton = new JButton("RockPaperScissorsLizardSpock!");
+    JLabel player = new JLabel("Player's Score");
+    JLabel computer = new JLabel("Computer's Score");
+    JTextArea results = new JTextArea();
+    JTextArea pscore = new JTextArea();
+    JTextArea cscore = new JTextArea();
 
     public int randInt(int min, int max) {
         int random = rand.nextInt((max - min) + 1) + min;
@@ -38,11 +53,8 @@ public class RPSLS extends JFrame {
     private void placeComponents(JPanel panel) {
         panel.setLayout(null);
 
-        JLabel yourChoice = new JLabel("Your Choice: ");
         yourChoice.setBounds(30,20,80,25);
         panel.add(yourChoice);
-
-        ButtonGroup group = new ButtonGroup();
 
         JRadioButton myRock = new JRadioButton("Rock");
         myRock.setBounds(26,45,80,25);
@@ -50,45 +62,38 @@ public class RPSLS extends JFrame {
         panel.add(myRock);
         //myRock.addActionListener(new MyActionListener());
 
-        JRadioButton myPaper = new JRadioButton("Paper");
         myPaper.setBounds(26,65,80,25);
         group.add(myPaper);
         panel.add(myPaper);
         //myPaper.addActionListener(new MyActionListener());
 
 
-        JRadioButton myScissors = new JRadioButton("Scissors");
         myScissors.setBounds(26,85,80,25);
         group.add(myScissors);
         panel.add(myScissors);
         //myScissors.addActionListener(new MyActionListener());
 
-        JRadioButton myLizard = new JRadioButton("Lizard");
         myLizard.setBounds(26,105,80,25);
         group.add(myLizard);
         panel.add(myLizard);
         //myLizard.addActionListener(new MyActionListener());
 
-        JRadioButton mySpock = new JRadioButton("Spock");
+
         mySpock.setBounds(26,125,80,25);
         group.add(mySpock);
         panel.add(mySpock);
         //mySpock.addActionListener(new MyActionListener());
 
-        JButton myButton = new JButton("RockPaperScissorsLizardSpock!");
         myButton.setBounds(10,155,330,25);
         panel.add(myButton);
         myButton.addActionListener(new MyActionListener());
 
-        JLabel player = new JLabel("Player's Score");
         player.setBounds(20,185,120,25);
         panel.add(player);
 
-        JLabel computer = new JLabel("Computer's Score");
         computer.setBounds(20,220,120,25);
         panel.add(computer);
 
-        JTextArea results = new JTextArea();
         results.setBounds(135,30,205,100);
         //placing a border to the TextArea
         Border border = BorderFactory.createLineBorder(Color.BLACK);
@@ -96,41 +101,157 @@ public class RPSLS extends JFrame {
                 BorderFactory.createEmptyBorder(10, 10, 10, 10)));
         panel.add(results);
 
-        JTextArea pscore = new JTextArea();
         pscore.setBounds(135,185,205,25);
         //placing a border to the TextArea
         pscore.setBorder(BorderFactory.createCompoundBorder(border,
                 BorderFactory.createEmptyBorder(5, 5, 5, 5)));
         panel.add(pscore);
 
-        JTextArea cscore = new JTextArea();
         cscore.setBounds(135,220,205,25);
         //placing a border to the TextArea
         cscore.setBorder(BorderFactory.createCompoundBorder(border,
                 BorderFactory.createEmptyBorder(5, 5, 5, 5)));
         panel.add(cscore);
 
-
-        if(myRock.isSelected()) {
-            playerChoice = 1;
-        } else if(myPaper.isSelected()) {
-            playerChoice = 2;
-        } else if(myScissors.isSelected()) {
-            playerChoice = 3;
-        } else if(myLizard.isSelected()) {
-            playerChoice = 4;
-        } else {
-            playerChoice = 5;
-        }
-
-
     }
 
     // inner class
     class MyActionListener implements ActionListener {
-        @Override
-        public void actionPerformed(ActionEvent e) {
+        public void actionPerformed(ActionEvent event) {
+            int computerChoice = randInt(1, 5);
+            if(event.getSource() == myButton) {
+                Enumeration<AbstractButton> allRadioButton = group.getElements();
+                while(allRadioButton.hasMoreElements()) {
+                    JRadioButton temp=(JRadioButton)allRadioButton.nextElement();
+                    if(temp.isSelected()) {
+                        if(temp.getText() == "Rock") {
+                            if(computerChoice == 1) {
+                                results.setText("Results: \n Player chose ROCK \n Computer Chose ROCK \n\n IT'S A DRAW.");
+                            } else if (computerChoice == 2) {
+                                results.setText("Results: \n Player chose ROCK \n Computer Chose PAPER \n\n YOU LOSE THIS ROUND.");
+                                computerScore++;
+                                cscore.setText("" +computerScore);
+                            } else if (computerChoice == 3) {
+                                results.setText("Results: \n Player chose ROCK \n Computer Chose SCISSORS \n\n YOU WIN THIS ROUND.");
+                                playerScore++;
+                                pscore.setText("" +playerScore);
+                            } else if (computerChoice == 4) {
+                                results.setText("Results: \n Player chose ROCK \n Computer Chose LIZARD \n\n YOU WIN THIS ROUND.");
+                                playerScore++;
+                                pscore.setText("" +playerScore);
+                            } else {
+                                results.setText("Results: \n Player chose ROCK \n Computer Chose SPOCK \n\n YOU LOSE THIS ROUND.");
+                                computerScore++;
+                                cscore.setText("" +computerScore);
+                            }
 
+                        } else if (temp.getText() == "Paper") {
+                            if(computerChoice == 1) {
+                                results.setText("Results: \n Player chose PAPER \n Computer Chose ROCK \n\n YOU WIN THIS ROUND.");
+                                playerScore++;
+                                pscore.setText("" +playerScore);
+                            } else if (computerChoice == 2) {
+                                results.setText("Results: \n Player chose PAPER \n Computer Chose PAPER \n\n IT'S A DRAW.");
+                            } else if (computerChoice == 3) {
+                                results.setText("Results: \n Player chose PAPER \n Computer Chose SCISSORS \n\n YOU LOSE THIS ROUND.");
+                                computerScore++;
+                                cscore.setText("" +computerScore);
+                            } else if (computerChoice == 4) {
+                                results.setText("Results: \n Player chose PAPER \n Computer Chose LIZARD \n\n YOU LOSE THIS ROUND.");
+                                computerScore++;
+                                cscore.setText("" +computerScore);
+                            } else {
+                                results.setText("Results: \n Player chose PAPER \n Computer Chose SPOCK \n\n YOU WIN THIS ROUND.");
+                                playerScore++;
+                                pscore.setText("" +playerScore);
+                            }
+
+                        } else if (temp.getText() == "Scissors") {
+                            if(computerChoice == 1) {
+                                results.setText("Results: \n Player chose SCISSORS \n Computer Chose ROCK \n\n YOU LOSE THIS ROUND.");
+                                computerScore++;
+                                cscore.setText("" +computerScore);
+                            } else if (computerChoice == 2) {
+                                results.setText("Results: \n Player chose SCISSORS \n Computer Chose PAPER \n\n YOU WIN THIS ROUND.");
+                                playerScore++;
+                                pscore.setText("" +playerScore);
+                            } else if (computerChoice == 3) {
+                                results.setText("Results: \n Player chose SCISSORS \n Computer Chose SCISSORS \n\n IT'S A DRAW.");
+                            } else if (computerChoice == 4) {
+                                results.setText("Results: \n Player chose SCISSORS \n Computer Chose LIZARD \n\n YOU WIN THIS ROUND.");
+                                playerScore++;
+                                pscore.setText("" +playerScore);
+                            } else {
+                                results.setText("Results: \n Player chose SCISSORS \n Computer Chose SPOCK \n\n YOU LOSE THIS ROUND.");
+                                computerScore++;
+                                cscore.setText("" +computerScore);
+                            }
+
+                        } else if (temp.getText() == "Lizard") {
+                            if(computerChoice == 1) {
+                                results.setText("Results: \n Player chose LIZARD \n Computer Chose ROCK \n\n YOU LOSE THIS ROUND.");
+                                computerScore++;
+                                cscore.setText("" +computerScore);
+                            } else if (computerChoice == 2) {
+                                results.setText("Results: \n Player chose LIZARD \n Computer Chose PAPER \n\n YOU WIN THIS ROUND.");
+                                playerScore++;
+                                pscore.setText("" +playerScore);
+                            } else if (computerChoice == 3) {
+                                results.setText("Results: \n Player chose LIZARD \n Computer Chose SCISSORS \n\n YOU LOSE THIS ROUND.");
+                                computerScore++;
+                                cscore.setText("" +computerScore);
+                            } else if (computerChoice == 4) {
+                                results.setText("Results: \n Player chose LIZARD \n Computer Chose LIZARD \n\n IT'S A DRAW.");
+                            } else {
+                                results.setText("Results: \n Player chose LIZARD \n Computer Chose SPOCK \n\n YOU WIN THIS ROUND.");
+                                playerScore++;
+                                pscore.setText("" +playerScore);
+                            }
+
+                        } else {
+                            if(computerChoice == 1) {
+                                results.setText("Results: \n Player chose SPOCK \n Computer Chose ROCK \n\n YOU WIN THIS ROUND.");
+                                playerScore++;
+                                pscore.setText("" +playerScore);
+                            } else if (computerChoice == 2) {
+                                results.setText("Results: \n Player chose SPOCK \n Computer Chose PAPER \n\n YOU LOSE THIS ROUND.");
+                                computerScore++;
+                                cscore.setText("" +computerScore);
+                            } else if (computerChoice == 3) {
+                                results.setText("Results: \n Player chose SPOCK \n Computer Chose SCISSORS \n\n YOU WIN THIS ROUND.");
+                                playerScore++;
+                                pscore.setText("" +playerScore);
+                            } else if (computerChoice == 4) {
+                                results.setText("Results: \n Player chose SPOCK \n Computer Chose LIZARD \n\n YOU LOSE THIS ROUND.");
+                                computerScore++;
+                                cscore.setText("" +computerScore);
+                            } else {
+                                results.setText("Results: \n Player chose SPOCK \n Computer Chose SPOCK \n\n IT'S A DRAW.");
+                            }
+
+                        }
+                    }
+
+                    if(computerScore == 5 || playerScore == 5) {
+                        if(playerScore == 5) {
+                            JOptionPane.showMessageDialog(null, "Game over! Player won.", "Congratulations!", JOptionPane.OK_OPTION);
+                        } else {
+                            JOptionPane.showMessageDialog(null, "Game over! Computer won.", "Better Luck Next Time", JOptionPane.OK_OPTION);
+                        }
+                        int play = JOptionPane.showConfirmDialog(null, "Play again?", "", JOptionPane.YES_NO_OPTION);
+                        if(play == 1) {
+                            System.exit(0);
+                        } else {
+                            playerScore = 0;
+                            computerScore = 0;
+                            pscore.setText("" + playerScore);
+                            cscore.setText("" + computerScore);
+                            results.setText("");
+                            group.clearSelection();
+                        }
+                    }
+                }
+            }
         }
     }
 
