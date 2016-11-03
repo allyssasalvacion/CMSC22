@@ -1,0 +1,4 @@
+¬í sr java.util.ArrayListxÒÇa I sizexp   w   sr studentdb2.StudentRmø¾²ÍÐ C 
+middleInitialI 	yearLevelL courset Ljava/lang/String;L 	crushNameq ~ L faveSubjectt Lstudentdb2/Course;L 	firstNameq ~ L lastNameq ~ L 
+studentNumberq ~ xp s   t bscst ginosr studentdb2.Course¼;wôç	 L 
+courseCodeq ~ L courseDescriptionq ~ xpt CMSC 22t dast allyssat alborest 2015x
